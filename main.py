@@ -43,6 +43,12 @@ class Student:
             total += grade
         return total / len(self.list_of_all_grades)
 
+    def __lt__(self, other):
+        if isinstance(other, Student):
+            return self.avg_rate() > other.avg_rate()
+        else:
+            return 'Сравнение невозможно'
+
     def avg_rate_per_course(self, course_calc):
         total = 0
         if course_calc in self.grades:
@@ -73,6 +79,12 @@ class Lecturer(Mentor):
         for grade in self.list_of_all_grades:
             total += grade
         return total / len(self.list_of_all_grades)
+
+    def __lt__(self, other):
+        if isinstance(other, Lecturer):
+            return self.avg_rate() > other.avg_rate()
+        else:
+            return 'Сравнение невозможно'
 
     def avg_rate_per_course(self, course_calc):
         total = 0
@@ -120,6 +132,7 @@ def avg_rate_per_student(course_calc):
     for student in students_list:
        total += student.avg_rate_per_course(course_calc)
     return total / len(students_list)
+
 
 def avg_rate_per_lecturer(course_calc):
     lecturers_list = list_of_lecturers[course_calc]
@@ -179,8 +192,9 @@ print(some_lecturer)
 # print(another_lecturer)
 print(some_student)
 # print(another_student)
-print(some_lecturer.avg_rate() > another_lecturer.avg_rate())
-print(some_student.avg_rate() > another_student.avg_rate())
+print(some_lecturer.__lt__(another_lecturer))
+print(some_student.__lt__(another_student))
+print(some_student.__lt__(another_lecturer))
 print(avg_rate_per_student('Git'))
 print(avg_rate_per_lecturer('Python'))
 print(some_student.avg_rate_per_course('Python'))
